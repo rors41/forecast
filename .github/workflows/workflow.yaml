@@ -23,10 +23,10 @@ jobs:
           mask-password: "true"
       - name: Get commit hash
         id: get-commit-hash
-        run: 'echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"'
+        run: 'echo "name=commit-hash::$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT'
       - name: Get timestamp
         id: get-timestamp
-        run: 'echo "::set-output name=timestamp::$(date +''%Y-%m-%d-%H-%M'')"'
+        run: 'echo "name=timestamp::$(date +''%Y-%m-%d-%H-%M'')" >> $GITHUB_OUTPUT'
       - name: 'Create env file'
         run: |
           touch .env
