@@ -23,10 +23,10 @@ jobs:
           mask-password: "true"
       - name: Get commit hash
         id: get-commit-hash
-        run: 'echo "name=commit-hash::$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT'
+        run: echo "commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Get timestamp
         id: get-timestamp
-        run: 'echo "name=timestamp::$(date +''%Y-%m-%d-%H-%M'')" >> $GITHUB_OUTPUT'
+        run: echo "timestamp=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
       - name: 'Create env file'
         run: |
           touch .env
@@ -38,8 +38,8 @@ jobs:
           ECR_REGISTRY: "${{ steps.login-ecr.outputs.registry }}"
           ECR_REPOSITORY: "${{ secrets.REPO_NAME }}"
           IMAGE_TAG: >-
-            ${{ steps.get-commit-hash.outputs.commit-hash }}-${{
-            steps.get-timestamp.outputs.timestamp }}
+            ${{ steps.get-commit-hash.outputs['commit-hash' }}-${{
+            steps.get-timestamp.outputs['timestamp'] }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
