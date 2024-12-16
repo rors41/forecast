@@ -13,5 +13,7 @@ class Config(BaseSettings):
     geoapify_geocode_api_url: str = "https://api.geoapify.com/v1/geocode/search"
     geoapify_api_key: SecretStr
 
+    app_api_key: SecretStr
+
 
 CONFIG = Config()  # pyright: ignore[reportCallIssue]

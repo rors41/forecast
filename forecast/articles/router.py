@@ -10,6 +10,7 @@ from forecast.articles.schemas import (
     CreateArticleResponse,
 )
 from forecast.articles.service import geocode_location, weather_forecast_data
+from forecast.auth import verify_bearer_token
 from forecast.dependency import get_httpx_client, get_llm
 
 articles_router = APIRouter(prefix="/articles", tags=["articles"])
@@ -17,6 +18,7 @@ articles_router = APIRouter(prefix="/articles", tags=["articles"])
 
 @articles_router.post("/")
 async def create_article(
+    _: Annotated[None, Depends(verify_bearer_token)],
     httpx_client: Annotated[AsyncClient, Depends(get_httpx_client)],
     llm: Annotated[ChatOpenAI, Depends(get_llm)],
     body: CreateArticleRequest,
