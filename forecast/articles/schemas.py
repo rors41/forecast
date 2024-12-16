@@ -60,8 +60,8 @@ class DailyForecastData(BaseModel):
 class CreateArticleRequest(BaseModel):
     language: ArticleLanguageEnum
     style: ArticleStyleEnum
-    location: str
-    date: str
+    location: str = Field(examples=["Kosice"])
+    date: str = Field(examples=["2024-12-16"])
 
     @field_validator("date", mode="before")
     @classmethod

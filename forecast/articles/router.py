@@ -21,6 +21,13 @@ async def create_article(
     llm: Annotated[ChatOpenAI, Depends(get_llm)],
     body: CreateArticleRequest,
 ) -> CreateArticleResponse:
+    """
+    **Request body**
+    - language - language of the generated article
+    - style - article style
+    - location - location of weather forecast article, should be a name of a city/village
+    - date - date of weather forecast, must be in YYYY-MM-DD format and in following interval 60 days in past <= date <= 7 days in future
+    """
     location_data = await geocode_location(httpx_client, body.location)
     weather_data = await weather_forecast_data(httpx_client, body.date, location_data)
     article = await create_weather_forecast_article(
