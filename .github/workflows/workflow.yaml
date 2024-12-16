@@ -31,7 +31,7 @@ jobs:
         run: |
           touch .env
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
-          echo API_KEY=${{ secrets.GEOAPIFY_API_KEY }} >> .env
+          echo GEOAPIFY_API_KEY=${{ secrets.GEOAPIFY_API_KEY }} >> .env
       - name: "Build, tag, and push the image to Amazon ECR"
         id: build-image
         env:
